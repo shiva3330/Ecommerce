@@ -1,0 +1,79 @@
+<section class="page-heading" aria-labelledby="cart-title">
+  <p class="eyebrow">Your saved finds</p>
+  <h1 id="cart-title">Your cart</h1>
+  <p class="muted-copy">A thoughtful collection starts here. Review your items before checkout.</p>
+</section>
+
+<section class="cart-layout" *ngIf="cart().items.length > 0; else emptyCart" aria-label="Shopping cart">
+  <div class="cart-items">
+    <div class="cart-item" *ngFor="let item of cart().items; trackBy: trackByItem">
+      <div class="cart-item-art" [attr.data-category]="item.product.category" aria-hidden="true">
+        <span>{{ item.product.category.slice(0, 1) }}</span>
+      </div>
+      <div class="cart-item-details">
+        <div class="cart-item-heading">
+          <div>
+            <p class="item-category">{{ item.product.category }}</p>
+            <h2>{{ item.product.name }}</h2>
+            <p class="item-seller">{{ item.product.seller.name }}</p>
+          </div>
+          <button class="remove-button" type="button" (click)="removeItem(item)">Remove</button>
+        </div>
+        <div class="cart-item-footer">
+          <div class="quantity-control" [attr.aria-label]="'Quantity for ' + item.product.name">
+            <button
+              type="button"
+              [attr.aria-label]="'Decrease quantity of ' + item.product.name"
+              (click)="decreaseQuantity(item)"
+            >
+              −
+            </button>
+            <span aria-live="polite">{{ item.quantity }}</span>
+            <button
+              type="button"
+              [disabled]="item.quantity >= item.product.inventory"
+              [attr.aria-label]="'Increase quantity of ' + item.product.name"
+              (click)="increaseQuantity(item)"
+            >
+              +
+            </button>
+          </div>
+          <span class="line-total">{{ item.product.price * item.quantity | currency: item.product.currency : 'symbol' : '1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+    <a class="text-link continue-link" routerLink="/">← Continue shopping</a>
+  </div>
+
+  <aside class="order-summary" aria-labelledby="summary-title">
+    <p class="eyebrow">Order summary</p>
+    <h2 id="summary-title">Ready when you are.</h2>
+    <dl>
+      <div>
+        <dt>Subtotal</dt>
+        <dd>{{ cart().subtotal | currency: 'USD' : 'symbol' : '1.2-2' }}</dd>
+      </div>
+      <div>
+        <dt>Shipping</dt>
+        <dd>{{ cart().shipping === 0 ? 'Free' : (cart().shipping | currency: 'USD' : 'symbol' : '1.2-2') }}</dd>
+      </div>
+      <div class="summary-total">
+        <dt>Total</dt>
+        <dd>{{ cart().total | currency: 'USD' : 'symbol' : '1.2-2' }}</dd>
+      </div>
+    </dl>
+    <p class="shipping-note" *ngIf="cart().shipping > 0">
+      Add {{ freeShippingRemaining() | currency: 'USD' : 'symbol' : '1.2-2' }} more for free shipping.
+    </p>
+    <a class="button-primary checkout-button" routerLink="/checkout">Continue to checkout <span aria-hidden="true">→</span></a>
+  </aside>
+</section>
+
+<ng-template #emptyCart>
+  <section class="empty-cart status-message" aria-labelledby="empty-cart-title">
+    <div class="empty-mark" aria-hidden="true">✦</div>
+    <h2 id="empty-cart-title">Your cart is waiting for a good find.</h2>
+    <p class="muted-copy">Browse the collection and save something made with care.</p>
+    <a class="button-primary" routerLink="/">Explore the collection</a>
+  </section>
+</ng-template>

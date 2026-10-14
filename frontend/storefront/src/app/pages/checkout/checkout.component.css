@@ -1,0 +1,244 @@
+.checkout-heading {
+  margin-bottom: 2.5rem;
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  align-items: start;
+  gap: 2.5rem;
+}
+
+.checkout-form {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.form-section,
+.checkout-summary {
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.form-section {
+  padding: 1.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 0.35rem;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.section-number {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.payment-note {
+  color: var(--color-muted-ink);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 0.84rem;
+}
+
+.place-order {
+  justify-self: start;
+}
+
+.checkout-summary {
+  position: sticky;
+  top: 6rem;
+  padding: 1.4rem;
+}
+
+.checkout-summary h2 {
+  margin-bottom: 1.3rem;
+  font-size: 1.55rem;
+}
+
+.checkout-summary ul {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1.3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.checkout-summary li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--color-muted-ink);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.checkout-summary li strong {
+  flex: 0 0 auto;
+  color: var(--color-ink);
+}
+
+.checkout-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+  font-weight: 700;
+}
+
+.checkout-total strong {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+.confirmation-card,
+.empty-checkout {
+  max-width: 45rem;
+  margin: 2rem auto 0;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.confirmation-card {
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.confirmation-mark {
+  display: grid;
+  width: 3.7rem;
+  height: 3.7rem;
+  margin: 0 auto 1.3rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #d9eee3;
+  color: var(--color-success);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.confirmation-card h1 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+}
+
+.confirmation-card .muted-copy {
+  max-width: 31rem;
+  margin: 0 auto 1.75rem;
+}
+
+.confirmation-details {
+  display: grid;
+  max-width: 24rem;
+  gap: 0.7rem;
+  margin: 0 auto 1.8rem;
+  text-align: left;
+}
+
+.confirmation-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.65rem;
+  font-size: 0.82rem;
+}
+
+.confirmation-details dt {
+  color: var(--color-muted-ink);
+}
+
+.confirmation-details dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 700;
+  text-align: right;
+}
+
+.confirmation-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.empty-checkout h1 {
+  margin-bottom: 0.75rem;
+}
+
+.empty-checkout .muted-copy {
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 850px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    position: static;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .form-section,
+  .checkout-summary {
+    padding: 1.1rem;
+  }
+
+  .confirmation-card,
+  .empty-checkout {
+    padding: 2.25rem 1.1rem;
+  }
+}

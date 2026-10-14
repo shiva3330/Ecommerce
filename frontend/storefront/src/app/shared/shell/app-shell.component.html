@@ -1,0 +1,61 @@
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" routerLink="/" aria-label="ECom home" (click)="closeNavigation()">
+      <span class="brand-mark" aria-hidden="true">E</span>
+      <span>Ecom</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-controls="primary-navigation"
+      [attr.aria-expanded]="mobileNavOpen()"
+      (click)="toggleNavigation()"
+    >
+      <span class="sr-only">Toggle navigation</span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav
+      id="primary-navigation"
+      class="primary-navigation"
+      aria-label="Primary navigation"
+      [class.is-open]="mobileNavOpen()"
+    >
+      <a
+        routerLink="/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeNavigation()"
+      >
+        Shop
+      </a>
+      <a routerLink="/seller" routerLinkActive="is-active" (click)="closeNavigation()">Sell with us</a>
+      <a routerLink="/cart" routerLinkActive="is-active" (click)="closeNavigation()">
+        Cart <span class="cart-count" [attr.aria-label]="cartService.totalItems() + ' items in cart'">{{ cartService.totalItems() }}</span>
+      </a>
+      <ng-container *ngIf="authService.isAuthenticated(); else signedOutLinks">
+        <span class="welcome-label">Hi, {{ authService.currentUser()?.name }}</span>
+        <button class="nav-button" type="button" (click)="signOut()">Sign out</button>
+      </ng-container>
+      <ng-template #signedOutLinks>
+        <a routerLink="/login" routerLinkActive="is-active" (click)="closeNavigation()">Sign in</a>
+      </ng-template>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="shell main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <p>Ecom gives independent sellers room to grow.</p>
+    <p class="footer-note">A portfolio storefront foundation · Built for thoughtful commerce</p>
+  </div>
+</footer>

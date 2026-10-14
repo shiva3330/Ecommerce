@@ -1,0 +1,70 @@
+<section class="dashboard-heading" aria-labelledby="dashboard-title">
+  <div>
+    <p class="eyebrow">Seller studio</p>
+    <h1 id="dashboard-title">Make room for your next good thing.</h1>
+    <p class="muted-copy">A calm home base for your listings, orders, and customers.</p>
+  </div>
+  <a class="button-primary" routerLink="/login" *ngIf="!authService.isAuthenticated()">Sign in to start <span aria-hidden="true">→</span></a>
+</section>
+
+<div class="development-banner" role="note">
+  <span aria-hidden="true">●</span>
+  <span><strong>Seller dashboard foundation.</strong> Listing, order, and payout workflows are ready for API wiring.</span>
+</div>
+
+<section class="seller-welcome" *ngIf="authService.isAuthenticated(); else guestSeller" aria-label="Seller account">
+  <div>
+    <span class="welcome-kicker">Your studio</span>
+    <h2>Welcome, {{ authService.currentUser()?.name }}.</h2>
+    <p>Connect your inventory service to turn this workspace into your daily rhythm.</p>
+  </div>
+  <span class="account-pill">{{ authService.currentUser()?.role | titlecase }} account</span>
+</section>
+
+<ng-template #guestSeller>
+  <section class="seller-welcome guest-welcome" aria-label="Seller preview">
+    <div>
+      <span class="welcome-kicker">Preview mode</span>
+      <h2>See the workspace before you sign in.</h2>
+      <p>Use the demo sign-in to preview the seller experience without a running auth service.</p>
+    </div>
+    <a class="text-link" routerLink="/login">Open demo sign-in <span aria-hidden="true">→</span></a>
+  </section>
+</ng-template>
+
+<section class="metric-grid" aria-label="Seller metrics">
+  <article class="metric-card" *ngFor="let metric of metrics">
+    <p>{{ metric.label }}</p>
+    <strong>{{ metric.value }}</strong>
+    <span>{{ metric.detail }}</span>
+  </article>
+</section>
+
+<section class="dashboard-grid">
+  <article class="dashboard-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">Your catalog</p>
+        <h2>Listings</h2>
+      </div>
+      <button class="button-secondary" type="button" disabled>Add listing</button>
+    </div>
+    <div class="empty-panel">
+      <span class="empty-panel-mark" aria-hidden="true">＋</span>
+      <h3>Your first listing starts here.</h3>
+      <p>Product creation will connect to the catalog API in the next slice of the seller workflow.</p>
+    </div>
+  </article>
+
+  <article class="dashboard-panel activity-panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">Keep an eye out</p>
+        <h2>Recent activity</h2>
+      </div>
+    </div>
+    <div class="empty-panel compact-empty">
+      <p>No activity yet. Your first order will show up here.</p>
+    </div>
+  </article>
+</section>

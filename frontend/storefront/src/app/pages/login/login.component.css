@@ -1,0 +1,111 @@
+.login-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem);
+  align-items: center;
+  gap: clamp(2.5rem, 8vw, 8rem);
+  max-width: 62rem;
+  margin: 1.5rem auto 0;
+}
+
+.login-copy h1 {
+  max-width: 35rem;
+  font-size: clamp(2.7rem, 6vw, 5rem);
+}
+
+.login-copy > .muted-copy {
+  max-width: 28rem;
+  font-size: 1.02rem;
+}
+
+.login-promise {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 2.2rem;
+  color: var(--color-muted-ink);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.login-promise p {
+  margin: 0;
+}
+
+.login-promise strong {
+  color: var(--color-ink);
+}
+
+.promise-mark {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.login-card {
+  padding: 1.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.login-card-heading h2 {
+  margin-bottom: 0.4rem;
+  font-size: 1.8rem;
+}
+
+.login-card-heading p {
+  margin-bottom: 1.35rem;
+  color: var(--color-muted-ink);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.login-card .development-banner {
+  margin: 0 0 1.25rem;
+  font-size: 0.75rem;
+}
+
+.login-card form {
+  display: grid;
+  gap: 1rem;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 0.8rem;
+}
+
+.login-footer {
+  margin: 1.4rem 0 0;
+  color: var(--color-muted-ink);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 780px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 35rem;
+  }
+
+  .login-copy h1 {
+    font-size: clamp(2.6rem, 12vw, 4rem);
+  }
+
+  .login-promise {
+    margin-top: 1.5rem;
+  }
+}

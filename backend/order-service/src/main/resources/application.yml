@@ -1,0 +1,48 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  application:
+    name: order-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+        max.block.ms: 5000
+        request.timeout.ms: 5000
+        delivery.timeout.ms: 10000
+  datasource:
+    url: ${ORDER_DB_URL:${DB_URL:jdbc:postgresql://localhost:5432/order_db}}
+    username: ${ORDER_DB_USERNAME:${DB_USERNAME:marketplace}}
+    password: ${ORDER_DB_PASSWORD:${DB_PASSWORD:}}
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+app:
+  kafka:
+    topics:
+      order-placed: ${ORDER_PLACED_TOPIC:order.placed.v1}
+  outbox:
+    scheduler:
+      enabled: ${OUTBOX_SCHEDULER_ENABLED:true}
+      fixed-delay: ${OUTBOX_SCHEDULER_FIXED_DELAY:1000ms}
+      batch-size: ${OUTBOX_SCHEDULER_BATCH_SIZE:50}
+      claim-timeout: ${OUTBOX_SCHEDULER_CLAIM_TIMEOUT:30s}
+      send-timeout: ${OUTBOX_SCHEDULER_SEND_TIMEOUT:10s}
+      retry-base-delay: ${OUTBOX_SCHEDULER_RETRY_BASE_DELAY:1s}
+      retry-max-delay: ${OUTBOX_SCHEDULER_RETRY_MAX_DELAY:5m}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

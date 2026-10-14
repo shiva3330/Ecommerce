@@ -1,0 +1,126 @@
+<ng-container *ngIf="orderConfirmation() as confirmation; else checkoutState">
+  <section class="confirmation-card" aria-labelledby="confirmation-title">
+    <div class="confirmation-mark" aria-hidden="true">✓</div>
+    <p class="eyebrow">Order received</p>
+    <h1 id="confirmation-title">Thank you for shopping small.</h1>
+    <p class="muted-copy">Your order is in the queue. We’ll use the details you provided to keep you posted.</p>
+    <dl class="confirmation-details">
+      <div>
+        <dt>Order number</dt>
+        <dd>{{ confirmation.id }}</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>{{ confirmation.status | titlecase }}</dd>
+      </div>
+      <div>
+        <dt>Placed</dt>
+        <dd>{{ confirmation.createdAt | date: 'medium' }}</dd>
+      </div>
+    </dl>
+    <div class="confirmation-actions">
+      <a class="button-primary" routerLink="/">Continue shopping</a>
+      <a class="text-link" routerLink="/seller">Explore the seller dashboard</a>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #checkoutState>
+  <ng-container *ngIf="cart().items.length > 0; else noItems">
+    <section class="page-heading checkout-heading" aria-labelledby="checkout-title">
+      <p class="eyebrow">Almost yours</p>
+      <h1 id="checkout-title">Checkout</h1>
+      <p class="muted-copy">A simple, secure handoff for your small-batch finds.</p>
+    </section>
+
+    <div class="checkout-layout">
+      <form class="checkout-form" [formGroup]="checkoutForm" (ngSubmit)="placeOrder()" novalidate>
+        <section class="form-section" aria-labelledby="shipping-title">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">01</span>
+            <div>
+              <p class="eyebrow">Delivery details</p>
+              <h2 id="shipping-title">Where should we send it?</h2>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <label for="full-name">Full name</label>
+              <input id="full-name" type="text" autocomplete="name" formControlName="fullName" />
+              <span class="field-error" *ngIf="checkoutForm.controls.fullName.invalid && checkoutForm.controls.fullName.touched">Please enter your name.</span>
+            </div>
+            <div class="form-field full-width">
+              <label for="email">Email address</label>
+              <input id="email" type="email" autocomplete="email" formControlName="email" />
+              <span class="field-error" *ngIf="checkoutForm.controls.email.invalid && checkoutForm.controls.email.touched">Enter a valid email address.</span>
+            </div>
+            <div class="form-field full-width">
+              <label for="address">Street address</label>
+              <input id="address" type="text" autocomplete="street-address" formControlName="address" />
+              <span class="field-error" *ngIf="checkoutForm.controls.address.invalid && checkoutForm.controls.address.touched">Please enter a delivery address.</span>
+            </div>
+            <div class="form-field">
+              <label for="city">City</label>
+              <input id="city" type="text" autocomplete="address-level2" formControlName="city" />
+              <span class="field-error" *ngIf="checkoutForm.controls.city.invalid && checkoutForm.controls.city.touched">Required.</span>
+            </div>
+            <div class="form-field">
+              <label for="postal-code">Postal code</label>
+              <input id="postal-code" type="text" autocomplete="postal-code" formControlName="postalCode" />
+              <span class="field-error" *ngIf="checkoutForm.controls.postalCode.invalid && checkoutForm.controls.postalCode.touched">Required.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-section" aria-labelledby="payment-title">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">02</span>
+            <div>
+              <p class="eyebrow">Payment</p>
+              <h2 id="payment-title">Choose a demo payment method</h2>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="payment-method">Payment method</label>
+            <select id="payment-method" formControlName="paymentMethod">
+              <option value="demo-card">Demo card ending in 4242</option>
+              <option value="invoice">Request an invoice</option>
+            </select>
+            <span class="payment-note">No real payment details are collected in this portfolio foundation.</span>
+          </div>
+        </section>
+
+        <p class="form-error" *ngIf="errorMessage()" role="alert">{{ errorMessage() }}</p>
+        <button class="button-primary place-order" type="submit" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Placing order…' : 'Place demo order' }} <span aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <aside class="checkout-summary" aria-labelledby="checkout-summary-title">
+        <p class="eyebrow">In your bag</p>
+        <h2 id="checkout-summary-title">Order summary</h2>
+        <ul>
+          <li *ngFor="let item of cart().items">
+            <span>{{ item.quantity }} × {{ item.product.name }}</span>
+            <strong>{{ item.product.price * item.quantity | currency: item.product.currency : 'symbol' : '1.2-2' }}</strong>
+          </li>
+        </ul>
+        <div class="checkout-total">
+          <span>Total</span>
+          <strong>{{ cart().total | currency: 'USD' : 'symbol' : '1.2-2' }}</strong>
+        </div>
+        <a class="text-link" routerLink="/cart">Edit cart</a>
+      </aside>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #noItems>
+  <section class="empty-checkout status-message" aria-labelledby="no-items-title">
+    <p class="eyebrow">Nothing to check out</p>
+    <h1 id="no-items-title">Your cart is empty.</h1>
+    <p class="muted-copy">Choose a few good things first, then come back here to finish up.</p>
+    <a class="button-primary" routerLink="/">Browse products</a>
+  </section>
+</ng-template>

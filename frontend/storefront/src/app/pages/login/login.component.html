@@ -1,0 +1,45 @@
+<section class="login-layout" aria-labelledby="login-title">
+  <div class="login-copy">
+    <p class="eyebrow">Welcome back</p>
+    <h1 id="login-title">A better way to shop small.</h1>
+    <p class="muted-copy">Sign in to keep your finds together, track orders, and manage your seller studio.</p>
+    <div class="login-promise">
+      <span class="promise-mark" aria-hidden="true">✦</span>
+      <p><strong>Built for independent commerce.</strong><br />One home for makers and thoughtful shoppers.</p>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <div class="login-card-heading">
+      <h2>Sign in</h2>
+      <p>Use the prefilled demo details to preview the seller view.</p>
+    </div>
+
+    <div class="development-banner" role="note">
+      <span aria-hidden="true">●</span>
+      <span><strong>Development demo.</strong> If the auth service is unavailable, this page uses a local fallback. Try
+         seller&#64;example.com to see the dashboard.</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+      <div class="form-field">
+        <label for="login-email">Email address</label>
+        <input id="login-email" type="email" autocomplete="email" formControlName="email" />
+        <span class="field-error" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">Enter a
+          valid email address.</span>
+      </div>
+      <div class="form-field">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" autocomplete="current-password" formControlName="password" />
+        <span class="field-error" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">Use
+          at least 6 characters.</span>
+      </div>
+      <p class="form-error" *ngIf="errorMessage()" role="alert">{{ errorMessage() }}</p>
+      <button class="button-primary submit-button" type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Signing in…' : 'Sign in' }} <span aria-hidden="true">→</span>
+      </button>
+    </form>
+
+    <p class="login-footer">New to Ecom? <a class="text-link" routerLink="/seller">Start selling with us</a></p>
+  </div>
+</section>

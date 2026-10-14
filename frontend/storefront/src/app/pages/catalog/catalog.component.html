@@ -1,0 +1,110 @@
+<section class="catalog-hero" aria-labelledby="catalog-title">
+  <div class="hero-copy">
+    <p class="eyebrow">The independent edit</p>
+    <h1 id="catalog-title">Good things, made with intention.</h1>
+    <p class="hero-description">
+      Discover useful, beautiful goods from independent makers who care about the details.
+    </p>
+    <a class="text-link" routerLink="/seller">Are you a maker? Sell with us <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="hero-note" aria-label="Marketplace promise">
+    <span class="hero-note-mark" aria-hidden="true">✦</span>
+    <p>Small-batch goods<br />from real people.</p>
+  </div>
+</section>
+
+<div class="development-banner" *ngIf="usingDevelopmentFallback()" role="status">
+  <span aria-hidden="true">●</span>
+  <span><strong>Development fallback active.</strong> Showing preview catalog data because the catalog service is unavailable.</span>
+</div>
+
+<p class="sr-only" aria-live="polite">{{ liveMessage() }}</p>
+
+<section class="catalog-layout" aria-label="Product catalog">
+  <aside class="filter-panel" aria-labelledby="filter-title">
+    <div class="filter-heading">
+      <h2 id="filter-title">Find your fit</h2>
+      <button class="filter-reset" type="button" (click)="resetFilters()">Reset</button>
+    </div>
+
+    <div class="filter-fields">
+      <div class="form-field">
+        <label for="product-search">Search</label>
+        <input
+          id="product-search"
+          type="search"
+          placeholder="Try “linen”"
+          [value]="searchTerm()"
+          (input)="onSearch($event)"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="product-category">Category</label>
+        <select id="product-category" [value]="selectedCategory()" (change)="onCategoryChange($event)">
+          <option *ngFor="let category of categories()" [value]="category">
+            {{ category === 'all' ? 'All categories' : category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="product-sort">Sort by</label>
+        <select id="product-sort" [value]="selectedSort()" (change)="onSortChange($event)">
+          <option value="featured">Featured first</option>
+          <option value="rating">Highest rated</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <div class="catalog-results">
+    <div class="results-heading">
+      <div>
+        <p class="eyebrow">Shop the collection</p>
+        <h2>Made for the everyday</h2>
+      </div>
+      <span class="result-count">{{ filteredProducts().length }} {{ filteredProducts().length === 1 ? 'item' : 'items' }}</span>
+    </div>
+
+    <div class="status-message" *ngIf="isLoading()" role="status">Loading the collection…</div>
+
+    <div class="product-grid" *ngIf="!isLoading() && filteredProducts().length > 0">
+      <article class="product-card" *ngFor="let product of filteredProducts(); trackBy: trackByProduct">
+        <div class="product-art" [attr.data-category]="product.category" aria-hidden="true">
+          <span>{{ product.category.slice(0, 1) }}</span>
+          <small>{{ product.featured ? 'Featured' : 'New find' }}</small>
+        </div>
+        <div class="product-content">
+          <div class="product-label-row">
+            <span class="product-category">{{ product.category }}</span>
+            <span class="product-rating" [attr.aria-label]="product.rating + ' out of 5 stars'">★ {{ product.rating }}</span>
+          </div>
+          <h3>{{ product.name }}</h3>
+          <p class="product-description">{{ product.description }}</p>
+          <p class="seller-line">Sold by <strong>{{ product.seller.name }}</strong></p>
+          <div class="product-footer">
+            <span class="product-price">{{ product.price | currency: product.currency : 'symbol' : '1.2-2' }}</span>
+            <button
+              class="button-quiet"
+              type="button"
+              [disabled]="product.inventory === 0"
+              [attr.aria-label]="'Add ' + product.name + ' to cart'"
+              (click)="addToCart(product)"
+            >
+              {{ product.inventory === 0 ? 'Sold out' : 'Add to cart' }}
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="status-message empty-results" *ngIf="!isLoading() && filteredProducts().length === 0">
+      <h3>No matches yet.</h3>
+      <p>Try a broader search or reset the filters to see the full collection.</p>
+      <button class="button-secondary" type="button" (click)="resetFilters()">Show all products</button>
+    </div>
+  </div>
+</section>
