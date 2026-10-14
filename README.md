@@ -1,6 +1,6 @@
 # Ecom — Multi-vendor Marketplace
 
-Ecom is a portfolio-grade, end-to-end marketplace foundation for demonstrating practical full-stack and distributed-systems skills. A customer can discover products, add them to a cart, check out, and later track an order. A seller can manage a catalog and see a seller-facing dashboard. The platform is intentionally split into independently deployable Spring Boot services behind an API gateway, with Angular as the storefront UI.
+Ecom is a industry-grade, end-to-end marketplace. A customer can discover products, add them to a cart, check out, and later track an order. A seller can manage a catalog and see a seller-facing dashboard. The platform is intentionally split into independently deployable Spring Boot services behind an API gateway, with Angular as the storefront UI.
 
 The goal is not to claim that a scaffold is a production ecommerce platform. The goal is to provide a coherent, runnable slice and a roadmap that lets you implement, explain, test, and deploy the next slice in a job interview.
 
